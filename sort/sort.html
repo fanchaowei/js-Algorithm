@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sort</title>
+</head>
+<body>
+  
+</body>
+<script>
+const arr = [111, 1, 23, 57, 12, 7, 195, 144]
+function quick(arr, start, end) {
+  const init = start
+  const flag = arr[init]
+  start++
+  while (start <= end) {
+    while (arr[start] < flag) {
+      start++
+    }
+    while (arr[end] > flag) {
+      end--
+    }
+    if (start < end) {
+      ;[arr[start], arr[end]] = [arr[end], arr[start]]
+      start++
+      end--
+    }
+  }
+  ;[arr[init], arr[start - 1]] = [arr[start - 1], arr[init]]
+  return start
+}
+function quickSort1(arr, start, end) {
+  if (start < end) {
+    const index = quick(arr, start, end)
+    quickSort1(arr, start, index - 1)
+    quickSort1(arr, index, end)
+  }
+  return arr
+}
+
+console.log('原地快排', quickSort1(arr, 0, arr.length - 1))
+
+</script>
+</html>
