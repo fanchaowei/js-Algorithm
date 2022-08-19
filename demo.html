@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+var exist = function (board, word) {
+  if (board.length === 0) {
+    return false
+  }
+  if (word.length === 0) {
+    return true
+  }
+
+  const row = board.length
+  const col = board[0].length
+  for (let i = 0; i < row; i++) {
+    for (let k = 0; k < col; k++) {
+      const res = find(i, k, 0)
+      if (res) return true
+    }
+  }
+  return false
+
+  function find(i, k, cur = 0) {
+    if (i < 0 || i > row - 1 || k < 0 || k > col - 1) {
+      return false
+    }
+
+    const singleWord = board[i][k]
+
+    board[i][k] = null
+
+    if (singleWord !== word[cur]) {
+      return false
+    }
+
+    if (cur === word.length - 1) {
+      return true
+    }
+
+    const res =
+      find(i + 1, k, cur + 1) ||
+      find(i - 1, k, cur + 1) ||
+      find(i, k + 1, cur + 1) ||
+      find(i, k - 1, cur + 1)
+
+    board[i][k] = singleWord
+
+    return res
+  }
+}
+const board = [["a","b"]]
+const word = 'ba'
+console.log(exist(board,word))
+</script>
+</html>
