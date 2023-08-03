@@ -17,27 +17,47 @@
  * @param {number} n
  * @return {ListNode}
  */
+// var removeNthFromEnd = function (head, n) {
+//   if (!head) {
+//     return []
+//   }
+//   // 定义一个头部的哨兵节点
+//   let dummy = {
+//     next: head,
+//   }
+//   // 设置快慢指针
+//   let fast = (slow = dummy)
+//   // 先让快指针先走 n 位
+//   while (n--) {
+//     fast = fast.next
+//   }
+//   // 然后快慢指针一起走，等 fast 走到最后一位，对于 slow 来说就是倒数第 n 位
+//   while (fast.next !== null) {
+//     fast = fast.next
+//     slow = slow.next
+//   }
+//   // 删除倒数第 n 位
+//   slow.next = slow.next.next
+//   return dummy.next
+// }
+
 var removeNthFromEnd = function (head, n) {
   if (!head) {
     return []
   }
-  // 定义一个头部的哨兵节点
-  let dummy = {
+  const dummy = {
     next: head,
   }
-  // 设置快慢指针
   let fast = (slow = dummy)
-  // 先让快指针先走 n 位
-  while (n--) {
+  for (let i = 0; i < n; i++) {
     fast = fast.next
   }
-  // 然后快慢指针一起走，等 fast 走到最后一位，对于 slow 来说就是倒数第 n 位
   while (fast.next !== null) {
     fast = fast.next
     slow = slow.next
   }
-  // 删除倒数第 n 位
   slow.next = slow.next.next
   return dummy.next
 }
+
 // @lc code=end
