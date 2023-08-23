@@ -17,32 +17,59 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-var permute = function (nums) {
-  const list = []
-  backTrack(list, [], nums)
-  return list
-}
-// 递归函数
-function backTrack(list, temp, nums) {
-  if (temp.length === nums.length) {
-    // 如果 temp 的长度和 nums 相同，那么就是塞满了。
-    // 将其存入 list 并返回
-    list.push([...temp])
-    return
-  }
+// var permute = function (nums) {
+//   const list = []
+//   backTrack(list, [], nums)
+//   return list
+// }
+// // 递归函数
+// function backTrack(list, temp, nums) {
+//   if (temp.length === nums.length) {
+//     // 如果 temp 的长度和 nums 相同，那么就是塞满了。
+//     // 将其存入 list 并返回
+//     list.push([...temp])
+//     return
+//   }
 
-  // 循环遍历，就是塞入的过程
-  for (let i = 0; i < nums.length; i++) {
-    // 将已经塞入 temp 的数据排除
-    if (temp.includes(nums[i])) {
-      continue
+//   // 循环遍历，就是塞入的过程
+//   for (let i = 0; i < nums.length; i++) {
+//     // 将已经塞入 temp 的数据排除
+//     if (temp.includes(nums[i])) {
+//       continue
+//     }
+//     // 塞入数据
+//     temp.push(nums[i])
+//     // 继续递归塞入下一个数据
+//     backTrack(list, temp, nums)
+//     // 将塞入的数据弹出，也就是回溯
+//     temp.pop()
+//   }
+// }
+
+var permute = function (nums) {
+  if (!nums.length) {
+    return []
+  }
+  const list = []
+  const temp = []
+
+  backTrack(list, temp, nums)
+  return list
+
+  function backTrack(list, temp, nums) {
+    if (temp.length === nums.length) {
+      list.push([...temp])
+      return
     }
-    // 塞入数据
-    temp.push(nums[i])
-    // 继续递归塞入下一个数据
-    backTrack(list, temp, nums)
-    // 将塞入的数据弹出，也就是回溯
-    temp.pop()
+
+    for (let i = 0; i < nums.length; i++) {
+      if (temp.includes(nums[i])) {
+        continue
+      }
+      temp.push(nums[i])
+      backTrack(list, temp, nums)
+      temp.pop()
+    }
   }
 }
 
