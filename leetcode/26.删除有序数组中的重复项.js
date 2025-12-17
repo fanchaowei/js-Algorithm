@@ -9,6 +9,19 @@
  * @param {number[]} nums
  * @return {number}
  */
+
+var removeDuplicates = function (nums) {
+  let slow = 0
+
+  for (let fast = 0; fast < nums.length; fast++) {
+    if (nums[fast] !== nums[slow]) {
+      nums[++slow] = nums[fast]
+    }
+  }
+
+  return slow + 1
+}
+
 // var removeDuplicates = function (nums) {
 //   if (nums.length === 0) {
 //     return 0
@@ -36,20 +49,4 @@
 //   }
 //   return slow + 1
 // }
-
-var removeDuplicates = function (nums) {
-  if (nums.length === 0) {
-    return []
-  }
-  let slow = 0
-  let fast = 0
-  while (fast <= nums.length - 1) {
-    if (nums[slow] === nums[fast]) {
-      fast++
-    } else {
-      nums[++slow] = nums[fast++]
-    }
-  }
-  return slow + 1
-}
 // @lc code=end

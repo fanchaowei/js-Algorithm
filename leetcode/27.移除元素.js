@@ -10,7 +10,21 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function (nums, val) {}
+var removeElement = function (nums, val) {
+  /**
+   * 双指针，fast 正常循环数组，slow 数组中不等于 val 的值的位置
+   */
+  let slow = 0
+
+  for (let fast = 0; fast < nums.length; fast++) {
+    if (nums[fast] !== val) {
+      nums[slow] = nums[fast]
+      slow++
+    }
+  }
+
+  return slow
+}
 
 // var removeElement = function (nums, val) {
 //   if (nums.length === 0) {

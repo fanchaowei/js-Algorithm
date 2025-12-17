@@ -66,37 +66,39 @@ var threeSum = function (nums) {
     return []
   }
 
-  const list = []
-  nums.sort((a, b) => a - b)
-  // console.log('nums', nums)
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] === nums[i - 1]) {
+  const res = []
+
+  let left = 0
+  let right = nums.length - 1
+
+  const arr = nums.sort((a, b) => a - b)
+
+  for (let i = 0; i <= nums.length - 3; i++) {
+    if (i > 0 && arr[i] === arr[i - 1]) {
       continue
     }
-    let left = i + 1
-    let right = nums.length - 1
+
+    left = i + 1
+    right = nums.length - 1
     while (left < right) {
-      let sum = nums[i] + nums[left] + nums[right]
-      // console.log(`第${i + 1}次`, sum, i, left, right)
-      if (sum === 0) {
-        list.push([nums[i], nums[left], nums[right]])
-        while (nums[left] === nums[left + 1]) {
-          left++
-        }
+      const sum = arr[i] + arr[left] + arr[right]
+      if (sum < 0) {
         left++
-        while (nums[right] === nums[right - 1]) {
-          right--
-        }
-        right--
       } else if (sum > 0) {
         right--
-      } else if (sum < 0) {
+      } else {
+        res.push([arr[i], arr[left], arr[right]])
+
+        while (left < right && arr[left] === arr[left + 1]) left++
+        while (left < right && arr[right] === arr[right - 1]) right--
+
         left++
+        right--
       }
     }
   }
-  return list
+
+  return res
 }
-// console.log(threeSum([1, -1, -1, 0]))
 
 // @lc code=end
