@@ -20,20 +20,43 @@ var reverseList = function (head) {
   if (!head || !head.next) {
     return head
   }
-  // 标识，放置原链表的上一个节点
-  let prev = null
-  // 标识，指向当前节点
+
   let cur = head
+  let preNode = null
+  let next = null
+
   while (cur) {
-    // 获取下一个节点
-    let next = cur.next
-    // 将下一个节点指向上一个节点
-    cur.next = prev
-    // 将上一个节点的标识赋值为当前节点
-    prev = cur
-    // 将当前节点的标识赋值为下一个节点，为下一轮循环做准备。
+    // 保存下一个 node
+    next = cur.next
+    // 将当前链表的 next 保存为上一个 node
+    cur.next = preNode
+    // 将 preNode 更新为当前的 node
+    preNode = cur
+    // 将 cur 更新为下一个 node
     cur = next
   }
-  return prev
+
+  return preNode
 }
+
+// var reverseList = function (head) {
+//   if (!head || !head.next) {
+//     return head
+//   }
+//   // 标识，放置原链表的上一个节点
+//   let prev = null
+//   // 标识，指向当前节点
+//   let cur = head
+//   while (cur) {
+//     // 获取下一个节点
+//     let next = cur.next
+//     // 将下一个节点指向上一个节点
+//     cur.next = prev
+//     // 将上一个节点的标识赋值为当前节点
+//     prev = cur
+//     // 将当前节点的标识赋值为下一个节点，为下一轮循环做准备。
+//     cur = next
+//   }
+//   return prev
+// }
 // @lc code=end

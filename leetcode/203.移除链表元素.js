@@ -18,12 +18,40 @@
  * @return {ListNode}
  */
 var removeElements = function (head, val) {
-  if (head === null) {
+  if (!head) {
     return head
   }
 
-  head.next = removeElements(head.next, val)
+  const dummy = new ListNode(0)
+  dummy.next = head
 
-  return head.val === val ? head.next : head
+  let cur = head
+  let prev = null
+
+  while (cur) {
+    if (cur.val === val) {
+      if (!prev) {
+        dummy.next = cur.next
+      } else {
+        prev.next = cur.next
+      }
+    } else {
+      prev = cur
+    }
+    cur = cur.next
+  }
+
+  return dummy.next
 }
+
+// var removeElements = function (head, val) {
+//   if (head === null) {
+//     return head
+//   }
+
+//   head.next = removeElements(head.next, val)
+
+//   return head.val === val ? head.next : head
+// }
+
 // @lc code=end

@@ -35,29 +35,58 @@ var detectCycle = function (head) {
   if (head === null) {
     return null
   }
-  let slow = (fast = head)
-  // fast 走得快，所以如果 fast 为 null ，说明有尽头
-  while (fast !== null) {
-    // 快慢指针开始走动，slow 走一步，fast 走两步
-    slow = slow.next
-    if (fast.next !== null) {
-      fast = fast.next.next
-    } else {
-      // 如果 fast.next 为 null ，说明有尽头，不是循环指针
+
+  let slow = head
+  let fast = head
+
+  while (fast) {
+    if (!fast.next || !fast.next.next) {
       return null
     }
-
-    // 快慢指针相等，走到了相遇的地方
-    if (fast === slow) {
-      // 定义一个 cur 指针从头开始走，走到和 slow 相遇的地方，就是循环连接的节点
-      let cur = head
-      while (cur !== slow) {
-        cur = cur.next
-        slow = slow.next
-      }
-      return cur
+    slow = slow.next
+    fast = fast.next.next
+    if (slow === fast) {
+      break
     }
   }
-  return null
+
+  let cur = head
+
+  while (cur !== slow) {
+    cur = cur.next
+    slow = slow.next
+  }
+
+  return cur
 }
+
+// var detectCycle = function (head) {
+//   if (head === null) {
+//     return null
+//   }
+//   let slow = (fast = head)
+//   // fast 走得快，所以如果 fast 为 null ，说明有尽头
+//   while (fast !== null) {
+//     // 快慢指针开始走动，slow 走一步，fast 走两步
+//     slow = slow.next
+//     if (fast.next !== null) {
+//       fast = fast.next.next
+//     } else {
+//       // 如果 fast.next 为 null ，说明有尽头，不是循环指针
+//       return null
+//     }
+
+//     // 快慢指针相等，走到了相遇的地方
+//     if (fast === slow) {
+//       // 定义一个 cur 指针从头开始走，走到和 slow 相遇的地方，就是循环连接的节点
+//       let cur = head
+//       while (cur !== slow) {
+//         cur = cur.next
+//         slow = slow.next
+//       }
+//       return cur
+//     }
+//   }
+//   return null
+// }
 // @lc code=end

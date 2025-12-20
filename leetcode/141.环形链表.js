@@ -26,18 +26,12 @@ var hasCycle = function (head) {
   let slow = head
   let fast = head
 
-  while (fast && fast.next) {
-    if (slow.next) {
-      slow = slow.next
-    } else {
+  while (fast) {
+    if (!fast.next || !fast.next.next) {
       return false
     }
-
-    if (fast.next && fast.next.next) {
-      fast = fast.next.next
-    } else {
-      return false
-    }
+    slow = slow.next
+    fast = fast.next.next
 
     if (slow === fast) {
       return true

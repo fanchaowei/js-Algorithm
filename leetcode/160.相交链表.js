@@ -29,19 +29,32 @@
  * @param {ListNode} headB
  * @return {ListNode}
  */
+
 var getIntersectionNode = function (headA, headB) {
-  // 定义标识
   let curA = headA
   let curB = headB
+
   while (curA !== curB) {
-    // 两个标识开始循环走，先走完自己段，然后再走对方断
-    // a+c+b+c
-    // b+c+a+c
-    // 最后 curA 和 curB 会一起到第四段，会相等。
-    // 相等的节点即是相交节点
     curA = curA === null ? headB : curA.next
     curB = curB === null ? headA : curB.next
   }
+
   return curA
 }
+
+// var getIntersectionNode = function (headA, headB) {
+//   // 定义标识
+//   let curA = headA
+//   let curB = headB
+//   while (curA !== curB) {
+//     // 两个标识开始循环走，先走完自己段，然后再走对方断
+//     // a+c+b+c
+//     // b+c+a+c
+//     // 最后 curA 和 curB 会一起到第四段，会相等。
+//     // 相等的节点即是相交节点
+//     curA = curA === null ? headB : curA.next
+//     curB = curB === null ? headA : curB.next
+//   }
+//   return curA
+// }
 // @lc code=end
