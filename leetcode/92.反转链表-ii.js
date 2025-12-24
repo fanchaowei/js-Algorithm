@@ -46,40 +46,75 @@
  * @return {ListNode}
  */
 var reverseBetween = function (head, left, right) {
-  // 上面有解题流程
+  let cur = head
+  let curTag = 1
+  let prev = null
 
-  // 定义哨兵节点，用于最后返回头节点
-  let dummy = {
-    next: head,
+  let firstHalf
+  let secondHalf
+  let lastDummy
+
+  while (cur) {
+    if (curTag === left) {
+      firstHalf = prev
+      lastDummy = cur
+    }
+
+    if (curTag === right) {
+      secondHalf = cur.next
+    }
+
+    if (cur >= left && cur <= right) {
+      let next = cur.next
+      prev = cur
+      cur.next = prev
+      cur = next
+    }
+
+    curTag++
   }
 
-  // 定义用于遍历的标识
-  let tmp = dummy
-  // 链表到 left 之前一位
-  for (let i = 0; i < left - 1; i++) {
-    tmp = tmp.next
-  }
-  // left 的这一位
-  let prev = tmp.next
-  // left 的下一位
-  let cur = prev.next
-  // 上面之所以定义 left 以及其下一位，是用来两者做反转使用
-  // 开始循环反转节点
-  for (let i = 0; i < right - left; i++) {
-    // 交换节点
-    let next = cur.next
-    cur.next = prev
-    prev = cur
-    cur = next
-  }
+  firstHalf.next = cur
+  lastDummy.next = secondHalf
 
-  // 将原链表的 left 位置的节点指向 cur，
-  // 反转结束后的 cur 是 right+1 位，刚好接上 right 后续的链表节点
-  tmp.next.next = cur
-  // 将链表 left-1 位接到反转后新的下一位上。
-  // 反转结束后的 prev 是原来的 right 位。
-  tmp.next = prev
-
-  return dummy.next
+  return firstHalf
 }
+
+// var reverseBetween = function (head, left, right) {
+//   // 上面有解题流程
+
+//   // 定义哨兵节点，用于最后返回头节点
+//   let cur = {
+//     next: head,
+//   }
+
+//   // 定义用于遍历的标识
+//   let tmp = cur
+//   // 链表到 left 之前一位
+//   for (let i = 0; i < left - 1; i++) {
+//     tmp = tmp.next
+//   }
+//   // left 的这一位
+//   let prev = tmp.next
+//   // left 的下一位
+//   let cur = prev.next
+//   // 上面之所以定义 left 以及其下一位，是用来两者做反转使用
+//   // 开始循环反转节点
+//   for (let i = 0; i < right - left; i++) {
+//     // 交换节点
+//     let next = cur.next
+//     cur.next = prev
+//     prev = cur
+//     cur = next
+//   }
+
+//   // 将原链表的 left 位置的节点指向 cur，
+//   // 反转结束后的 cur 是 right+1 位，刚好接上 right 后续的链表节点
+//   tmp.next.next = cur
+//   // 将链表 left-1 位接到反转后新的下一位上。
+//   // 反转结束后的 prev 是原来的 right 位。
+//   tmp.next = prev
+
+//   return cur.next
+// }
 // @lc code=end

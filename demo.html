@@ -12,33 +12,71 @@
 
 </body>
 <script>
-  var moveZeroes = function (nums) {
-    if (nums.length <= 1) {
-      return nums
-    }
+  var reverseBetween = function (head, left, right) {
+    let cur = head
+    let curTag = 1
+    let prev = null
 
-    let slow = 0
-    let fast = 0
+    let firstHalf
+    let secondHalf
+    let lastDummy
 
-    while (fast <= nums.length - 1) {
-      if (nums[fast]) {
-        nums[slow] = nums[fast]
-        slow++
-        fast++
-      } else {
-        fast++
+    while (curTag <= right) {
+      if (curTag === left) {
+        firstHalf = prev
+        lastDummy = cur
       }
+
+      if (curTag === right) {
+        secondHalf = cur.next
+      }
+
+      if (curTag >= left && curTag <= right) {
+        let next = cur.next
+        prev = cur
+        cur.next = prev
+        cur = next
+      } else {
+        prev = cur
+        cur = cur.next
+      }
+
+      curTag++
     }
 
-    while (slow <= nums.length - 1) {
-      nums[slow] = 0
-      slow++
-    }
+    firstHalf.next = prev
+    lastDummy.next = secondHalf
 
-    return nums
+    return firstHalf
   }
 
-  moveZeroes([0, 1, 0, 3, 12])
+
+  const head = {
+    val: 1,
+    next: null
+  }
+  const node2 = {
+    val: 2,
+    next: null
+  }
+  const node3 = {
+    val: 3,
+    next: null
+  }
+  const node4 = {
+    val: 4,
+    next: null
+  }
+  const node5 = {
+    val: 5,
+    next: null
+  }
+  head.next = node2
+  node2.next = node3
+  node3.next = node4
+  node4.next = node5
+
+  reverseBetween(head, 2, 4)
 
 </script>
 
