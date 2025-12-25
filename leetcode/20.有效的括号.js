@@ -9,6 +9,34 @@
  * @param {string} s
  * @return {boolean}
  */
+
+var isValid = function (s) {
+  const stack = []
+
+  const config = {
+    '(': ')',
+    '{': '}',
+    '[': ']',
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    const str = s[i]
+
+    if (Object.keys(config).includes(str)) {
+      stack.push(str)
+    } else if (stack.length === 0) {
+      return false
+    } else {
+      const _val = stack.pop()
+      if (config[_val] !== str) {
+        return false
+      }
+    }
+  }
+
+  return stack.length === 0 ? true : false
+}
+
 // var isValid = function (s) {
 //   let stack = []
 //   const obj = {
@@ -36,28 +64,4 @@
 //   }
 //   return true
 // }
-var isValid = function (s) {
-  let stack = []
-  const obj = {
-    '(': ')',
-    '[': ']',
-    '{': '}',
-  }
-  for (let i = 0; i < s.length; i++) {
-    if (Object.keys(obj).includes(s[i])) {
-      stack.push(s[i])
-    } else {
-      const lastIndex = stack[stack.length - 1]
-      if (obj[lastIndex] === s[i]) {
-        stack.pop()
-      } else {
-        return false
-      }
-    }
-  }
-  if (stack.length > 0) {
-    return false
-  }
-  return true
-}
 // @lc code=end

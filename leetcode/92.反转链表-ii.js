@@ -46,39 +46,81 @@
  * @return {ListNode}
  */
 var reverseBetween = function (head, left, right) {
-  let cur = head
-  let curTag = 1
-  let prev = null
+  const dummy = new ListNode(0)
+  dummy.next = head
 
-  let firstHalf
-  let secondHalf
-  let lastDummy
+  let tmp = dummy
 
-  while (cur) {
-    if (curTag === left) {
-      firstHalf = prev
-      lastDummy = cur
-    }
-
-    if (curTag === right) {
-      secondHalf = cur.next
-    }
-
-    if (cur >= left && cur <= right) {
-      let next = cur.next
-      prev = cur
-      cur.next = prev
-      cur = next
-    }
-
-    curTag++
+  for (let i = 0; i < left - 1; i++) {
+    tmp = tmp.next
   }
 
-  firstHalf.next = cur
-  lastDummy.next = secondHalf
+  let cur = tmp.next
+  let prev = null
 
-  return firstHalf
+  for (let i = left; i <= right; i++) {
+    let next = cur.next
+    cur.next = prev
+    prev = cur
+    cur = next
+  }
+
+  tmp.next.next = cur
+  tmp.next = prev
+
+  return dummy.next
 }
+
+/**
+ * 自己初次完成的代码
+ */
+// var reverseBetween = function (head, left, right) {
+//   if (!head.next || left === right) {
+//     return head
+//   }
+
+//   let dummy = head
+
+//   let cur = head
+//   let curTag = 1
+//   let prev = null
+
+//   let firstHalf
+//   let secondHalf
+//   let lastDummy
+
+//   while (curTag <= right) {
+//     if (curTag === left) {
+//       firstHalf = prev
+//       lastDummy = cur
+//     }
+
+//     if (curTag === right) {
+//       secondHalf = cur.next
+//     }
+
+//     if (curTag >= left && curTag <= right) {
+//       let next = cur.next
+//       cur.next = prev
+//       prev = cur
+//       cur = next
+//     } else {
+//       prev = cur
+//       cur = cur.next
+//     }
+
+//     curTag++
+//   }
+
+//   if (firstHalf) {
+//     firstHalf.next = prev
+//   } else {
+//     dummy = prev
+//   }
+//   lastDummy.next = secondHalf
+
+//   return dummy
+// }
 
 // var reverseBetween = function (head, left, right) {
 //   // 上面有解题流程
