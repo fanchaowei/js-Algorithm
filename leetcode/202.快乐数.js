@@ -9,6 +9,7 @@
  * @param {number} n
  * @return {boolean}
  */
+// 哈希表解法
 var isHappy = function (n) {
   /**
    * 该题解法的核心在于记录它是否会无限循环
@@ -25,7 +26,7 @@ var isHappy = function (n) {
 
   while (true) {
     let count = 0
-    for (let i = 0; i < sum.toString().length; i++) {
+    for (let i = 0; i < sum.length; i++) {
       count += Number(sum[i]) * Number(sum[i])
     }
     if (count === 1) {
@@ -40,4 +41,39 @@ var isHappy = function (n) {
 
   return false
 }
+
+/**
+ * 链表的解法，如果存在循环那必然会出现环，用快慢指针进行处理
+ */
+// var isHappy = function (n) {
+//   if (n === 1) {
+//     return true
+//   }
+//   const getNext = (num) => {
+//     let sum = num.toString()
+//     let count = 0
+//     for (let i = 0; i < sum.length; i++) {
+//       count += Number(sum[i]) * Number(sum[i])
+//     }
+//     return count
+//   }
+
+//   let slow = getNext(n)
+//   let fast = getNext(getNext(n))
+
+//   if (fast === 1) {
+//     return true
+//   }
+
+//   while (slow !== fast) {
+//     slow = getNext(slow)
+//     fast = getNext(getNext(fast))
+
+//     if (fast === 1) {
+//       return true
+//     }
+//   }
+
+//   return false
+// }
 // @lc code=end
