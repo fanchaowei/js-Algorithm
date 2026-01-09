@@ -17,18 +17,36 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
+
 var inorderTraversal = function (root) {
-  // 中序遍历是 先找左侧节点，在中间处理自己，再找右侧节点
-  let arr = []
-  function dfs(root) {
+  const arr = []
+
+  const loop = (root) => {
     if (!root) {
       return
     }
-    dfs(root.left)
+
+    loop(root.left)
     arr.push(root.val)
-    dfs(root.right)
+    loop(root.right)
   }
-  dfs(root)
+  loop(root)
+
   return arr
 }
+
+// var inorderTraversal = function (root) {
+//   // 中序遍历是 先找左侧节点，在中间处理自己，再找右侧节点
+//   let arr = []
+//   function dfs(root) {
+//     if (!root) {
+//       return
+//     }
+//     dfs(root.left)
+//     arr.push(root.val)
+//     dfs(root.right)
+//   }
+//   dfs(root)
+//   return arr
+// }
 // @lc code=end

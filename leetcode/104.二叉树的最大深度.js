@@ -17,8 +17,26 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
+var maxDepth = function (root) {
+  /**
+   * 本题的思路：先递归，后计算
+   * 层序的思路也可以
+   */
+  if (!root) {
+    return 0
+  }
 
-};
+  const loop = (root) => {
+    if (!root) {
+      return 0
+    }
+
+    const leftLayer = loop(root.left)
+    const rightLayer = loop(root.right)
+
+    return Math.max(leftLayer, rightLayer) + 1
+  }
+
+  return loop(root)
+}
 // @lc code=end
-

@@ -35,29 +35,66 @@
 // }
 
 // 迭代
+// var minDepth = function (root) {
+//   if (!root) {
+//     return 0
+//   }
+//   const stack = [root]
+//   // 记录深度
+//   let dep = 0
+//   // 外层循环，每循环一次就是一层
+//   while (true) {
+//     let size = stack.length
+//     dep++
+//     // 里层循环指的是这一层的左右子节点
+//     while (size--) {
+//       // 取出一个子节点
+//       const cur = stack.shift()
+//       // 如果没有左右子节点，则输出深度，找到最小深度
+//       if (!cur.left && !cur.right) {
+//         return dep
+//       }
+//       // 倘若存在左右子节点，则分别入栈
+//       cur.left && stack.push(cur.left)
+//       cur.right && stack.push(cur.right)
+//     }
+//   }
+// }
+
 var minDepth = function (root) {
   if (!root) {
     return 0
   }
-  const stack = [root]
-  // 记录深度
-  let dep = 0
-  // 外层循环，每循环一次就是一层
-  while (true) {
-    let size = stack.length
-    dep++
-    // 里层循环指的是这一层的左右子节点
-    while (size--) {
-      // 取出一个子节点
-      const cur = stack.shift()
-      // 如果没有左右子节点，则输出深度，找到最小深度
-      if (!cur.left && !cur.right) {
-        return dep
+
+  let layerLevel = 0
+
+  const loop = (layer) => {
+    layerLevel++
+    let nextLayer = []
+
+    for (let i = 0; i < layer.length; i++) {
+      const item = layer[i]
+      if (!item.left && !item.right) {
+        nextLayer = []
+        break
       }
-      // 倘若存在左右子节点，则分别入栈
-      cur.left && stack.push(cur.left)
-      cur.right && stack.push(cur.right)
+      if (item.left) {
+        nextLayer.push(item.left)
+      }
+      if (item.right) {
+        nextLayer.push(item.right)
+      }
     }
+
+    if (nextLayer.length === 0) {
+      return
+    }
+
+    loop(nextLayer)
   }
+
+  loop([root])
+
+  return layerLevel
 }
 // @lc code=end
