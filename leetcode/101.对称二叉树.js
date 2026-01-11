@@ -35,5 +35,32 @@
 //   return travese(root.left, root.right)
 // }
 
-var isSymmetric = function (root) {}
+var isSymmetric = function (root) {
+  if (!root) {
+    return true
+  }
+
+  let isSym = true
+
+  const loop = (root1, root2) => {
+    if (!isSym || (!root1 && !root2)) {
+      return
+    }
+    if ((!root1 && root2) || (root1 && !root2)) {
+      isSym = false
+      return
+    }
+    if (root1.val !== root2.val) {
+      isSym = false
+      return
+    }
+
+    loop(root1.left, root2.right)
+    loop(root1.right, root2.left)
+  }
+
+  loop(root.left, root.right)
+
+  return isSym
+}
 // @lc code=end
