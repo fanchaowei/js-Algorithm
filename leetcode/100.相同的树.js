@@ -54,6 +54,42 @@
 // }
 
 // 迭代写法
+// var isSameTree = function (p, q) {
+//   if (!p && !q) {
+//     return true
+//   }
+//   if (!p || !q) {
+//     return false
+//   }
+//   let queueP = [p]
+//   let queueQ = [q]
+//   // 开始迭代循环
+//   while (queueP.length && queueQ.length) {
+//     // 将栈内最后一项吐出
+//     const nodeP = queueP.pop()
+//     const nodeQ = queueQ.pop()
+//     if (nodeP.val !== nodeQ.val) {
+//       return false
+//     }
+//     if (nodeP.left && nodeQ.left) {
+//       // 如果两个节点的左子节点都存在则都推入栈中
+//       queueP.push(nodeP.left)
+//       queueQ.push(nodeQ.left)
+//     } else if (nodeP.left || nodeQ.left) {
+//       // 如果有一个是 null，则不相等，false
+//       return false
+//     }
+//     // 同上
+//     if (nodeP.right && nodeQ.right) {
+//       queueP.push(nodeP.right)
+//       queueQ.push(nodeQ.right)
+//     } else if (nodeP.right || nodeQ.right) {
+//       return false
+//     }
+//   }
+//   return true
+// }
+
 var isSameTree = function (p, q) {
   if (!p && !q) {
     return true
@@ -61,33 +97,35 @@ var isSameTree = function (p, q) {
   if (!p || !q) {
     return false
   }
-  let queueP = [p]
-  let queueQ = [q]
-  // 开始迭代循环
-  while (queueP.length && queueQ.length) {
-    // 将栈内最后一项吐出
-    const nodeP = queueP.pop()
-    const nodeQ = queueQ.pop()
-    if (nodeP.val !== nodeQ.val) {
-      return false
+
+  let isSame = true
+
+  const loop = (p, q) => {
+    if (p.val !== q.val) {
+      isSame = false
+      return
     }
-    if (nodeP.left && nodeQ.left) {
-      // 如果两个节点的左子节点都存在则都推入栈中
-      queueP.push(nodeP.left)
-      queueQ.push(nodeQ.left)
-    } else if (nodeP.left || nodeQ.left) {
-      // 如果有一个是 null，则不相等，false
-      return false
+
+    if ((p.left && !q.left) || (!p.left && q.left)) {
+      isSame = false
+      return
     }
-    // 同上
-    if (nodeP.right && nodeQ.right) {
-      queueP.push(nodeP.right)
-      queueQ.push(nodeQ.right)
-    } else if (nodeP.right || nodeQ.right) {
-      return false
+    if ((p.right && !q.right) || (!p.right && q.right)) {
+      isSame = false
+      return
+    }
+
+    if (p.left && q.left) {
+      loop(p.left, q.left)
+    }
+    if (p.right && q.right) {
+      loop(p.right, q.right)
     }
   }
-  return true
+
+  loop(p, q)
+
+  return isSame
 }
 
 // @lc code=end
